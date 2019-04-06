@@ -1,0 +1,3 @@
+---
+# tasks file for ucopacme.aws-ssm-agent
+- include: "{{ansible_os_family}}_install.yml"

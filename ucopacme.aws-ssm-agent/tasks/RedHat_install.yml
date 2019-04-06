@@ -1,0 +1,46 @@
+---
+- name: "dir to download amazon-ssm-agent.rpm"
+  file:
+    path: "{{ download_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+    recurse: false
+
+- name: is amazon ssm agent installed
+  yum:
+    list: "amazon-ssm-agent"
+  register: yummy
+
+- name: debug yum list
+  debug:
+    var: yummy
+
+- name: "fetch AWS ssm agent package if not already installed"
+  get_url:
+    url: "{{ src.Linux.url }}/{{ src.Linux.package }}"
+    dest: "{{ download_dir }}/{{ src.Linux.package }}"
+    mode: 550
+  when: yummy.results | selectattr("yumstate", "match", "installed") | list | length == 0
+
+- name: "Install ssm agent package"
+  action: >
+    {{ ansible_pkg_mgr }} name={{ download_dir }}/{{ src.Linux.package }} state=latest update_cache=yes
+  when: yummy.results | selectattr("yumstate", "match", "installed") | list | length == 0
+
+- name: stop amazon ssm agent before registering
+  service:
+    enabled: true
+    name: amazon-ssm-agent
+    state: "stopped"
+
+- name: "register ssm agent"
+  command:
+    "amazon-ssm-agent -register -code {{ ActivationCode }} -id {{ ActivationId }} -region {{ region }}"
+
+- name: start amazon ssm agent before registering
+  service:
+    enabled: true
+    name: amazon-ssm-agent
+    state: "started"

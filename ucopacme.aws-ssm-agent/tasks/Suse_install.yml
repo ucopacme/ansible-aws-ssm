@@ -1,0 +1,47 @@
+---
+- name: "dir to download amazon-ssm-agent.rpm"
+  file:
+    path: "{{ download_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+    recurse: false
+
+- name: "is amazon ssm agent installed on rpm based systems?"
+  command: rpm -q amazon-ssm-agent
+  register: installed
+  ignore_errors: true
+
+- name: debug is ssm agent installed by rpm
+  debug:
+    var: installed
+
+- name: "fetch AWS ssm agent package if not already installed"
+  get_url:
+    url: "{{ src.Linux.url }}/{{ src.Linux.package }}"
+    dest: "{{ download_dir }}/{{ src.Linux.package }}"
+    mode: 550
+  when: installed.stdout == "package amazon-ssm-agent is not installed"
+
+- name: "Install ssm agent package"
+  command:
+    rpm -ivh {{ download_dir }}/{{ src.Linux.package }}
+  when: installed.stdout == "package amazon-ssm-agent is not installed"
+
+- name: stop amazon ssm agent before registering
+  service:
+    enabled: true
+    name: amazon-ssm-agent
+    state: "stopped"
+  ignore_errors: true
+
+- name: "register ssm agent"
+  command:
+    "amazon-ssm-agent -register -code {{ ActivationCode }} -id {{ ActivationId }} -region {{ region }}"
+
+- name: start amazon ssm agent before registering
+  service:
+    enabled: true
+    name: amazon-ssm-agent
+    state: "started"

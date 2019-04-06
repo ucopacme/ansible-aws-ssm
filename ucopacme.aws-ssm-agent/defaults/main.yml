@@ -1,0 +1,10 @@
+---
+# defaults file for ucopacme.aws-ssm-agent
+ActivationCode: ""
+ActivationId: ""
+download_dir: /opt/src
+region: us-west-2
+src:
+  Linux:
+    url: "https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64"
+    package: "amazon-ssm-agent.rpm"
