@@ -1,0 +1,9 @@
+---
+# This playbook installs and configures aws ssm
+- name: "Install AWS ssm agent"
+  become: true
+  gather_facts: true
+  hosts: all
+  roles:
+    - { role: "ucopacme.aws-ssm-agent", ActivationCode: $ActivationCode, ActivationId:  $ActivationId
+    } 
