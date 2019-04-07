@@ -5,5 +5,4 @@
   gather_facts: true
   hosts: all
   roles:
-    - { role: "ucopacme.aws-ssm-agent", ActivationCode: $ActivationCode, ActivationId:  $ActivationId
-    } 
+    - role: ucopacme.aws-ssm-agent

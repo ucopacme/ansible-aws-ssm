@@ -34,12 +34,22 @@ are used from other roles.
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables
-passed in as parameters) is always nice for users too:
+Run the role in a playbook:
 
-    - hosts: servers
-      roles:
-         - { role: ucopacme.aws-ssm-agent, x: 42 }
+```
+ansible-playbook -i your-inventory -u your-user --key-file your-key-file  -e "ActivationCode=$ActivationCode" -e "ActivationId=$ActivationId" aws-ssm.yaml
+```
+
+with playbook aws-ssm.yaml:
+
+---
+# This playbook installs and configures aws ssm
+- name: "Install AWS ssm agent"
+  become: true
+  gather_facts: true
+  hosts: all
+  roles:
+    - role: ucopacme.aws-ssm-agent
 
 License
 -------

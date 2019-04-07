@@ -37,7 +37,7 @@
 
 - name: "register ssm agent"
   command:
-    "amazon-ssm-agent -register -code {{ ActivationCode }} -id {{ ActivationId }} -region {{ region }}"
+    "amazon-ssm-agent -y -register -code {{ ActivationCode }} -id {{ ActivationId }} -region {{ region }}"
 
 - name: start amazon ssm agent before registering
   service:
