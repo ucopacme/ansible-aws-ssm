@@ -1,12 +1,12 @@
 Role Name
 =========
 
-install amazon ssm agent on Linux systesm
+install amazon ssm agent on Linux systems
 
 Requirements
 ------------
 
-Works on Rhel6/7, CentOS6/7, SLES 11
+Works on Rhel6/7, CentOS6/7, working on SLES 11
 
 Role Variables
 --------------
