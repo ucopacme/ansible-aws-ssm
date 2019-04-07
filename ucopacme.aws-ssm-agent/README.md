@@ -42,7 +42,7 @@ ansible-playbook -i your-inventory -u your-user --key-file your-key-file  -e "Ac
 
 with playbook aws-ssm.yaml:
 
----
+```
 # This playbook installs and configures aws ssm
 - name: "Install AWS ssm agent"
   become: true
@@ -50,6 +50,7 @@ with playbook aws-ssm.yaml:
   hosts: all
   roles:
     - role: ucopacme.aws-ssm-agent
+```
 
 License
 -------
