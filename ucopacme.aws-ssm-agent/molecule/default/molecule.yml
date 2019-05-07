@@ -6,10 +6,10 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: rhel6
-    image: centos:6
+  - name: centos6
+    image: centos/systemd:6
   - name: rhel7
-    image: centos:7
+    image: centos/systemd:7
   - name: suse
     image: darksheer/sles11sp4
 provisioner:
